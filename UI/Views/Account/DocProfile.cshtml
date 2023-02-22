@@ -1,0 +1,114 @@
+﻿@model DoctorProfileViewModel
+
+<style>
+    .row1 {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    body > div > main > div > div > div {
+        width: 30%;
+    }
+
+    .space {
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: mediumslateblue;
+    }
+
+    .btn-primary {
+        margin-top: 10px;
+    }
+
+</style>
+
+<div class="container" id="editPlace">
+    <div class="row1">
+        <div>
+            <div class="card space">
+                <div class="card-header">
+                    Полное имя
+                </div>
+                <div class="card-body">
+                    @Model.FullName
+                </div>
+            </div>
+
+            <div class="card space">
+                <div class="card-header">
+                    Информация о враче
+                </div>
+                <div class="card-body">
+                    @Model.Description
+                </div>
+            </div>
+
+            <div>
+                <a class="btn btn-primary"
+                   asp-action="ChangeDoctor"
+                   data-ajax="true"
+                   data-ajax-update="#editPlace"
+                   data-ajax-mode="replace"
+                   data-ajax-method="get">Изменить</a>
+            </div>
+
+            <div>
+                <a class="btn btn-primary"
+                   asp-action="ChangePass"
+                   asp-route-name=@User.Identity.Name
+                   data-ajax="true"
+                   data-ajax-update="#editPlace"
+                   data-ajax-mode="replace"
+                   data-ajax-method="get">Изменить Пароль</a>
+            </div>
+        </div>
+        <div>
+            @if (Model.IsSubs())
+            {
+                <h2>Ближайшие записи</h2>
+                @foreach (var item in Model.Subs)
+                {
+                    <div class="card space">
+                        <div class="card-header">
+                            @item.ServiceName
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <p class="card-text">Пациент</p>
+                                </div>
+                                <div class="col-sm">
+                                    <a class="card-text">@item.UserFullName</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <p class="card-text">Дата</p>
+                                </div>
+                                <div class="col-sm">
+                                    <a class="card-text">@item.Date.ToShortDateString()</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <p class="card-text">Время</p>
+                                </div>
+                                <div class="col-sm">
+                                    <a class="card-text">@item.Time</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

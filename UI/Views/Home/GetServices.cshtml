@@ -1,0 +1,23 @@
+﻿@model ServiceCatalogViewModel
+@{
+    ViewData["Title"] = "Услуги";
+}
+<div class="container">
+    @foreach (var item in Model.Services)
+    {
+        <div class="card">
+            <div class="card-header">
+                @item.Name
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm">
+                    </div>
+                    <div class="col-sm">
+                        <p class="card-text">Цена : @item.Price руб.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

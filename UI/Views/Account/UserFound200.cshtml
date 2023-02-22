@@ -1,0 +1,27 @@
+﻿    @foreach (var item in ViewBag.users)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                Клиент
+            </div>
+            <div class="card">
+                <div class="d-flex">
+                    <div class="flex-column">
+                    <div class="col-sm">
+                        <p class="card-text">Полное имя - @item.FullName</p>
+                    </div>
+                    <div class="col-sm">
+                        <p class="card-text">Номер телефона - @item.PhoneNumber</p>
+                    </div>
+                    <div class="col-sm">
+                        <p class="card-text">Пол - @item.Sex</p>
+                    </div>
+                    <div class="col-sm">
+                        <p class="card-text">Дата рождения - @item.Bithday.ToShortDateString()</p>
+                    </div>
+                </div>
+                <a href="@Url.Action("UserSubscribe","Account",new { name = item.UserName.ToString() })" class="btn btn-primary">Записать</a>
+                </div>
+            </div>
+        </div>
+    }

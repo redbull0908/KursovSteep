@@ -1,0 +1,35 @@
+﻿@model ServiceCatalogViewModel
+@{
+    ViewData["Title"] = "Услуги";
+}
+<div class="container">
+    @foreach (var item in Model.CatalogCategory)
+    {
+        <div class="card">
+            <div class="card-header" id="logo">
+                @item.Name
+            </div>
+            <div class="card-body">
+                <div id="img" class="row">
+                    <div class="col-sm">
+                    </div>
+                    <div class="col-sm">
+                        <p class="card-text">@item.Description</p>
+                        <a asp-action="GetServices" asp-route-name="@item.Name" class="btn btn-light">Подробнее</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+
+
+<script>
+    let img = new Map("","");
+    img.set("Лабораторнаядиагностика", "../image/Лабораторная_диагностика.jpg").set("Узи", "../image/Узи.jpg");
+
+    document.querySelectorAll("#logo").forEach(el => {
+        el.parentElement.lastElementChild.firstElementChild.firstElementChild.style.backgroundImage = `url(${img.get(el.innerText.split(' ').join(''))})`;
+    });
+</script>

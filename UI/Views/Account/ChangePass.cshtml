@@ -1,0 +1,32 @@
+﻿@model ChangePassViewModel
+
+<div class="container" id="editPlace">
+    <form asp-action="ChangePass" id="form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="OldPassword" class="control-label white"></label>
+            <input asp-for="OldPassword" class="form-control" required />
+            <span asp-validation-for="OldPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="NewPassword" class="control-label white"></label>
+            <input asp-for="NewPassword" class="form-control" required />
+            <span asp-validation-for="NewPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PasswordConfirm" class="control-label white"></label>
+            <input asp-for="PasswordConfirm" class="form-control" required />
+            <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            <div>
+                <input type="submit" asp-route-vm=@Model value="Потвердить" class="btn btn-primary" />
+            </div>
+            <div>
+                <a class="btn btn-primary" asp-action="UserProfile" asp-route-login=@User.Identity.Name>Назад</a>
+            </div>
+        </div>
+    </form>
+</div>

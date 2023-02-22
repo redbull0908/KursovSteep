@@ -1,0 +1,60 @@
+﻿@using BLL.DTO
+@model List<SubscribeDTO>
+<style>
+    .row1 {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    h3 {
+        color:white;
+    }
+
+</style>
+
+<div class="container">
+
+    <div class="row1">
+
+        <div class="card space">
+            <div class="card-header">
+                <h2>Сегодня : @DateTime.Now.ToShortDateString()</h2>
+            </div>
+            <div class="card-body">
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Register">Записать нового клиента</a>
+                <a class="btn btn-primary" asp-controller="Account" asp-action="SearchUser">Записать клиента</a>
+            </div>
+        </div>
+
+        @if (Model.Count > 0)
+        {
+
+
+            <div class="">
+                <h3>Записи на сегодня</h3>
+                @foreach (var item in Model)
+                {
+                    <div class="card space">
+                        <div class="card-header">
+                            <h4>@item.ServiceName</h4>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                Пациент - @item.UserFullName
+                            </div>
+                            <div>
+                                Доктор - @item.DoctorName
+                            </div>
+                            <div>
+                                Время приема - @item.Date.ToString("t")
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+</div>

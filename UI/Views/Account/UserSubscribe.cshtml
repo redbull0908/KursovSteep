@@ -1,0 +1,256 @@
+﻿<style>
+    .container > .form-select {
+        width: 70%;
+    }
+
+    .hidden {
+        display: none;
+    }
+    .container h3 {
+        color:white;
+    }
+
+    .btn {
+        margin-top:20px;
+    }
+
+       .btn-primary:hover{
+        background-color : mediumslateblue;
+    }
+
+</style>
+<div class="container-sm">
+    <form method="post">
+    <div class="input-group input-group-sm mb-3">
+        <span class="col-sm-4 input-group-text">Выберите категорию</span>
+        @Html.DropDownList("Category",ViewBag?.category as SelectList,new {id = "category"})
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <span class="col-sm-4 input-group-text">Выберите услугу</span>
+        @Html.DropDownList("Service",ViewBag?.services as SelectList,new {id = "service"})
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <span class="col-sm-4 input-group-text">Выберите Врача</span>
+        @Html.DropDownList("Doctors",ViewBag?.doctors as SelectList,new {id = "doctors"})
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <span class="col-sm-4 input-group-text">Дата приема</span>
+        @Html.DropDownList("Date",ViewBag?.date as SelectList,new {id = "date"})
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <span class="col-sm-4 input-group-text">Время приема</span>
+        <select class="form-select" id="time" name="Time" onchange="ChangeTime"></select>
+    </div>
+    
+    <input class="hidden" type="text" name="dateName" />
+        <input class="hidden" type="text" name="serviceName" />
+        <input class="hidden" type="text" name="userName" value="@ViewBag.name" />
+        <button id="bt" class="btn btn-primary" type="submit" asp-action="UserSubscribe" asp-controller="Account">Записаться</button>
+    </form>
+</div>
+
+@section scripts {
+    <script>
+
+        $("select").addClass("form-select");
+        $(function () {
+
+            $('#category').change(function () {
+                // получаем выбранный id
+                var id = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    async: false,
+                    url: '@Url.Action("SubService")/' + id,
+                    success: function (data) {
+
+                        // заменяем содержимое присланным частичным представлением
+                        $('#service').replaceWith(data);
+                        $("select").addClass("form-select");
+
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    async:false,
+                    url: '@Url.Action("SubDoctors")/' + id,
+                    success: function (data) {
+
+                        // заменяем содержимое присланным частичным представлением
+                        $('#doctors').replaceWith(data);
+                        $("select").addClass("form-select");
+                    }
+                });
+                let docid = $("#doctors").val();
+                $.ajax({
+                    type: 'GET',
+                    async:false,
+                    url: '@Url.Action("SubDate")/' + docid,
+                    success: function (data) {
+                        console.log(docid);
+                        // заменяем содержимое присланным частичным представлением
+                        $('#date').replaceWith(data);
+                        $("select").addClass("form-select");
+                    }
+                });
+                let date = $("#date option:selected").text();
+                let name = $("#doctors option:selected").text();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("SubTime")/?str=' + date+'||'+name,
+                    success: function (data) {
+                        let item = $("btn");
+                        // заменяем содержимое присланным частичным представлением
+                        $('#time').replaceWith(data);
+                        $("select").addClass("form-select");
+                    }
+                });
+                
+                $('#doctors').change(function () {
+                    // получаем выбранный id
+                    let docid = $(this).val();
+                    $.ajax({
+                        type: 'GET',
+                        async:false,
+                        url: '@Url.Action("SubDate")/' + docid,
+                        success: function (data) {
+                            console.dir(docid);
+                            // заменяем содержимое присланным частичным представлением
+                            $('#date').replaceWith(data);
+                            $("select").addClass("form-select");
+                        }
+                    });
+                    let date = $("#date option:selected").text();
+                    let name = $("#doctors option:selected").text();
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("SubTime")/?str=' + date+'||'+name,
+                        success: function (data) {
+                            let item = $("btn");
+                            // заменяем содержимое присланным частичным представлением
+                            $('#time').replaceWith(data);
+                            $("select").addClass("form-select");
+                        }
+                    });
+
+                    $('#date').change(function () {
+                        let date = $("#date option:selected").text();
+                        let name = $("#doctors option:selected").text();
+                        $.ajax({
+                            type: 'GET',
+                            url: '@Url.Action("SubTime")/?str=' + date+'||'+name,
+                            success: function (data) {
+                                let item = $("btn");
+                                // заменяем содержимое присланным частичным представлением
+                                $('#time').replaceWith(data);
+                                $("select").addClass("form-select");
+                            }
+                        });
+                    });
+                });
+                $('#date').change(function () {
+                    let date = $("#date option:selected").text();
+                let name = $("#doctors option:selected").text();
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("SubTime")/?str=' + date+'||'+name,
+                        success: function (data) {
+                            let item = $("btn");
+                            // заменяем содержимое присланным частичным представлением
+                            $('#time').replaceWith(data);
+                            $("select").addClass("form-select");
+                        }
+                    });
+                });
+            });
+
+            $('#doctors').change(function () {
+                // получаем выбранный id
+                let docid = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    async:false,
+                    url: '@Url.Action("SubDate")/' + docid,
+                    success: function (data) {
+
+                        // заменяем содержимое присланным частичным представлением
+                        $('#date').replaceWith(data);
+                        $("select").addClass("form-select");
+                    }
+                });
+                let date = $("#date option:selected").text();
+                let name = $("#doctors option:selected").text();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("SubTime")/?str=' + date+'||'+name,
+                    success: function (data) {
+                        let item = $("btn");
+                        // заменяем содержимое присланным частичным представлением
+                        $('#time').replaceWith(data);
+                        $("select").addClass("form-select");
+                    }
+                });
+                $('#date').change(function () {
+                    let date = $("#date option:selected").text();
+                let name = $("#doctors option:selected").text();
+                $.ajax({
+                type: 'GET',
+                        url: '@Url.Action("SubTime")/?str=' + date + '||' + name,
+                success: function (data) {
+                    let item = $("btn");
+                    // заменяем содержимое присланным частичным представлением
+                    $('#time').replaceWith(data);
+                    $("select").addClass("form-select");
+                }
+            });
+            });
+            });
+
+            $('#date').change(function () {
+                let date = $("#date option:selected").text();
+                let name = $("#doctors option:selected").text();
+                $.ajax({
+                type: 'GET',
+                    url: '@Url.Action("SubTime")/?str=' + date+'||'+name,
+                success: function (data) {
+                    let item = $("btn");
+                    // заменяем содержимое присланным частичным представлением
+                    $('#time').replaceWith(data);
+                    $("select").addClass("form-select");
+                }
+            });
+            });
+
+            let date = $("#date option:selected").text();
+            let name = $("#doctors option:selected").text();
+            
+            let string = '';
+            $("#date option").each(function (key, value) {
+                string = value.text;
+                if (string.length > 15) {
+                    value.text = string.slice(0, 10);
+                }
+            })
+
+            $.ajax({
+                type: 'GET',
+                async:false,
+                url: '@Url.Action("SubTime")/?str=' + date+'||'+name,
+                success: function (data) {
+                    console.log(date);
+                    console.log(name);
+                    // заменяем содержимое присланным частичным представлением
+                    $('#time').replaceWith(data);
+                    $("select").addClass("form-select");
+                }
+            });
+        })
+        $('#bt').on('click',()=>{
+            let name = $('form > input.hidden').eq(0);
+            let serviceName = $('form > input.hidden').eq(1);
+            name.val($("#date option:selected").text());
+            serviceName.val($("#service option:selected").text());
+        });
+
+    </script>
+}

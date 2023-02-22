@@ -1,0 +1,8 @@
+﻿@using BLL.DTO;
+@model IEnumerable<ServiceDTO>
+<select id="service" name="Service">
+    @foreach (var item in Model)
+    {
+        <option value="@item.ServiceCategoryId">@item.Name</option>
+    }
+</select>

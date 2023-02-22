@@ -1,0 +1,29 @@
+﻿@model DoctorCatalogViewModel
+@{
+    ViewData["Title"] = "Наши специалисты";
+}
+<style>
+    img {
+        width:100%;
+    }
+</style>
+<div class="container">
+    @foreach (var item in Model.Doctors)
+    {
+        <div class="card">
+            <div class="card-header">
+                @item.FullName
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm">
+                        <img src=@item.Img alt="not found"/>
+                    </div>
+                    <div class="col-sm">
+                        <p class="card-text">@item.Description</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

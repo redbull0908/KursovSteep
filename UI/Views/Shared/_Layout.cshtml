@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Медицинский центр - @ViewData["title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/UI.styles.css" asp-append-version="true" />
+    <link rel="shortcut icon" href="~/favicon.png" type="image/png">
+</head>
+<body class="bacg-style">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Home" class="nav-link">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="GetServiceCategory" class="nav-link">Услуги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Doctors">Наши специалисты</a>
+                    </li>
+                    @*<li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Initializer">Инициализация</a>
+                    </li>*@
+                </ul>
+                @if(User.IsInRole("manage")){
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Logout">Выйти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="ManageProfile">Регистратура</a>
+                    </li>
+                </ul>
+                }
+                @if (User.IsInRole("doctor"))
+                {
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="Logout">Выйти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="DocProfile">Профиль доктора</a>
+                        </li>
+                    </ul>
+                }
+                @if (User.IsInRole("user"))
+                {
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Logout">Выйти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-route-login=@User.Identity.Name asp-action="UserProfile">Профиль @User.Identity.Name</a>
+                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="UserSubscribe">Запись на прием</a>
+                        </li>
+                    </ul>
+                }
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                          <a class="nav-link" asp-controller="Account" asp-action="Login">Войти</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" asp-controller="Account" asp-action="Register">Регистрация</a>
+                       </li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4 p-0">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted bg-light">
+        <div class="container-fluid">
+            &copy; 2022 - Здоровье - просто !
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

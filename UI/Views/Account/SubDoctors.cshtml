@@ -1,0 +1,9 @@
+﻿@using BLL.DTO;
+@model IEnumerable<DoctorDTO>
+<select id="doctors" name="Doctors">
+    @foreach (var item in Model)
+    {
+        <option value="@item.Id">@item.FullName</option>
+    }
+</select>
+

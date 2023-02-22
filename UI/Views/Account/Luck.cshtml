@@ -1,0 +1,27 @@
+﻿@using BLL.DTO
+@model SubscribeDTO
+
+<div class="container">
+    <div class="card space">
+        <div class="card-header">
+            Запись успешно выполнена
+        </div>
+        <div class="card-body">
+            <div>
+                Пациент - @Model.UserFullName
+            </div>
+            <br>
+            <div>
+                Доктор - @Model.DoctorName
+            </div>
+            <br>
+            <div>
+                Наименование услуги - @Model.ServiceName
+            </div>
+            <br>
+            <div>
+                Дата - @Model.Date.ToShortDateString() Время - @Model.Time
+            </div>
+        </div>
+    </div>
+</div>

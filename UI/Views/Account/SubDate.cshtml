@@ -1,0 +1,9 @@
+﻿@using BLL.DTO;
+@model IEnumerable<ScheduleDTO>
+<select id="date" name="Date">
+    @foreach (var item in Model.Where(x=>x.Date.Date >= DateTime.Now.Date && DateTime.Now.Hour > 18).ToList())
+    {
+        <option value="@item.DoctorId">@item.Date.ToShortDateString()</option>
+    }
+</select>
+

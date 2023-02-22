@@ -1,0 +1,72 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Поиск клиента";
+}
+<style>
+
+    .btn-check:checked + .btn-primary {
+        background-color: mediumslateblue;
+    }
+
+    .btn-primary:hover {
+        background-color: mediumslateblue;
+    }
+
+    .input-group {
+        width : 50%;
+    }
+
+    input::placeholder {
+        font-size:14px;
+        font-weight:900;
+        text-align:center;
+    }
+
+    .col-md1 > .card {
+        width:50%;
+    }
+
+    .col-md1 > .card > .card {
+        padding:10px;
+    }
+
+    .d-flex {
+        align-items: center;
+        justify-content: space-around;
+    }
+
+</style>
+
+<div class="container">
+    <div class="flex-column">
+        <div class="col-md1">
+            <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">Поиск по ФИО</span>
+                <input id="UserName" type="text" class="form-control" placeholder="Введите полное имя клиента" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div id="editPlace"></div>
+            <div>
+                <a id="search" class="btn btn-primary mt-3 mb-3">Поиск</a>
+            </div>
+        </div>
+        <div class="col-md1">
+            <div id="replace"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('search').addEventListener('click', () => {
+        let value = document.getElementById('UserName').value;
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("FoundUser")/?UserName=' + value,
+            success: function (data) {
+                document.getElementById('UserName').value = "";
+                // заменяем содержимое присланным частичным представлением
+                $('#replace').replaceWith(data);
+            }
+        });
+    });
+</script>
+
